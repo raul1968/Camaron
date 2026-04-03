@@ -124,15 +124,18 @@ class ArtistBrain:
 
             # Learn from the best historical questions for this category.
             best = self._qdb.get_best_questions(category, top_k=len(questions))
-            best_texts = [r.question_text for r in best]
+            best_records = {r.question_text: r for r in best}
             # Prefer proven questions over template questions where available.
-            final_questions = best_texts if best_texts else questions
+            final_questions = list(best_records.keys()) if best_records else questions
 
-            # Log new questions so they can receive feedback.
-            qids = [
-                self._qdb.log_question(q, category, query_text=query)
-                for q in final_questions
-            ]
+            # Log only newly generated template questions; historical ones already
+            # have IDs in the database and should not be duplicated.
+            qids = []
+            for q in final_questions:
+                if q in best_records:
+                    qids.append(best_records[q].question_id)
+                else:
+                    qids.append(self._qdb.log_question(q, category, query_text=query))
 
             return BrainResponse(
                 query=query,

@@ -131,10 +131,10 @@ class QuestionDatabase:
             }
 
         total_ratings = sum(r.rating_count for r in self._records.values())
-        rated = [r for r in self._records.values() if r.rating_count > 0]
+        all_ratings = [v for r in self._records.values() for v in r.ratings]
         overall_avg = (
-            round(sum(r.average_rating for r in rated) / len(rated), 4)
-            if rated
+            round(sum(all_ratings) / len(all_ratings), 4)
+            if all_ratings
             else 0.0
         )
 

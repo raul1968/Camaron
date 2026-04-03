@@ -96,10 +96,11 @@ def run_gui() -> int:
 
     # Rebrand the window as Camaron
     window.setWindowTitle("Camaron")
-    # Update the title label inside the window if accessible
+    # Update the "Doku" title label inside the window if accessible
     try:
-        for label in window.findChildren(type(window.status_label).__mro__[-2]):
-            if hasattr(label, "text") and label.text() == "Doku":
+        from PyQt6.QtWidgets import QLabel as _QLabel
+        for label in window.findChildren(_QLabel):
+            if label.text() == "Doku":
                 font = QFont()
                 font.setPointSize(18)
                 font.setBold(True)

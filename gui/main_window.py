@@ -752,7 +752,7 @@ class MainWindow(QMainWindow):
             timeline_data.append({"capsule_id": slot.capsule_id})
 
         manifest = {
-            "fps": self._timeline._fps,
+            "fps": self._timeline.get_fps(),
             "timeline": timeline_data,
             "capsules": store_data["capsules"],
             "edges": store_data["edges"],

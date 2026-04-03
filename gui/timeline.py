@@ -221,7 +221,7 @@ class Timeline(QWidget):
         self.frame_selected.emit(index)
 
     def _update_label(self):
-        self._lbl_frame.setText(f"Frame: {self._playhead} / {max(0, len(self._slots) - 1)}")
+        self._lbl_frame.setText(f"Frame: {self._playhead} / {len(self._slots)}")
 
 
 # ---------------------------------------------------------------------------

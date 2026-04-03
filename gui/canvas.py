@@ -101,6 +101,9 @@ class Canvas(QWidget):
     def layer_count(self) -> int:
         return len(self._layers)
 
+    def get_active_layer_index(self) -> int:
+        return self._active_layer_idx
+
     # ------------------------------------------------------------------
     # Tool API
     # ------------------------------------------------------------------
@@ -142,15 +145,6 @@ class Canvas(QWidget):
             painter.drawImage(0, 0, layer.image)
         painter.end()
 
-        buf = io.BytesIO()
-        ba = composite.bits().asstring(composite.sizeInBytes())
-        # Use QImageWriter via bytes
-        byte_array = bytearray()
-        import struct
-        # Write via QImage.save into a QBuffer analogue – use a temp path approach
-        # Actually use Python's io and QImage.save to bytes via format
-        import tempfile, os
-        # Save to bytes using a workaround: save to QByteArray
         from PyQt6.QtCore import QByteArray, QBuffer, QIODevice
         qba = QByteArray()
         buffer = QBuffer(qba)

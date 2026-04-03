@@ -109,6 +109,9 @@ class Timeline(QWidget):
     # Public API
     # ------------------------------------------------------------------
 
+    def get_fps(self) -> int:
+        return self._fps
+
     def slot_count(self) -> int:
         return len(self._slots)
 

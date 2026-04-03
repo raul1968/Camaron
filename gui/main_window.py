@@ -386,7 +386,7 @@ class MainWindow(QMainWindow):
         self._layer_combo.blockSignals(True)
         self._layer_combo.clear()
         self._layer_combo.addItems(self._canvas.layer_names())
-        self._layer_combo.setCurrentIndex(self._canvas._active_layer_idx)
+        self._layer_combo.setCurrentIndex(self._canvas.get_active_layer_index())
         self._layer_combo.blockSignals(False)
 
     # ------------------------------------------------------------------
@@ -664,7 +664,7 @@ class MainWindow(QMainWindow):
                     break
 
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-        fps = self._timeline._fps
+        fps = self._timeline.get_fps()
         writer = cv2.VideoWriter(path, fourcc, fps, (width, height))
 
         written = 0
